@@ -1,9 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import firestore from '@react-native-firebase/firestore';
+import PostAPI from './../../api/post';
 
 const getPostData = createAsyncThunk('post/getPostData', async () => {
-  const users = await firestore().collection('post').get();
-  const response = users.docs.map(doc => ({...doc.data(), id: doc.id}));
+  const response = await PostAPI.getPost();
   return response;
 });
 

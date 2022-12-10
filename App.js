@@ -7,24 +7,18 @@ import StartScreen from './src/screens/Auth/index';
 import Login from './src/screens/Auth/Login';
 import Register from './src/screens/Auth/Register';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
-import firestore from '@react-native-firebase/firestore';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-
 const Stack = createStackNavigator();
 
 function App() {
-  const [users, setUsers] = useState([]);
-
   // useEffect(() => {
-  //   async function getData() {
-  //     const users = await firestore().collection('users').get();
-  //     const userList = users.docs.map(doc => ({...doc.data(), id: doc.id}));
-  //     setUsers(userList);
-  //   }
-  //   getData();
+  //   console.log('UseEffect');
+  //   fetch('https://61bc10c1d8542f001782453b.mockapi.io/post')
+  //     .then(response => response.json())
+  //     .then(data => console.log(data))
+  //     .catch(console.log);
   // }, []);
-  // console.log(users);
   return (
     <Provider store={store}>
       <NavigationContainer>

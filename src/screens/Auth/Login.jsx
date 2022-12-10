@@ -11,6 +11,7 @@ import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 import React, {useEffect, useState} from 'react';
 import {useCallback} from 'react';
 import firestore from '@react-native-firebase/firestore';
+import PostAPI from '../../api/post';
 
 function Login({navigation}) {
   const [accounts, setAccounts] = useState([]);

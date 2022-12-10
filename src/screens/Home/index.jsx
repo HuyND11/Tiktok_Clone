@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import getPostData from './../../redux/posts/thunk';
 import {store} from './../../redux/store';
 import {FlatList} from 'react-native-gesture-handler';
+import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
@@ -13,10 +14,25 @@ function Home() {
 
   const loading = useSelector(state => state.getPostToolkitReducer.loading);
 
-  store.getState();
+  // store.getState();
+
+  console.log('myPost => ', myPost);
 
   useEffect(() => {
-    dispatch(getPostData());
+    // dispatch(getPostData());
+    console.log('UseEffect');
+    axios
+      .get('https://61bc10c1d8542f001782453b.mockapi.io/post')
+      .then(res => {
+        console.log('Data =>', res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // fetch('https://61bc10c1d8542f001782453b.mockapi.io/post')
+    //   .then(response => response.json())
+    //   .then(data => console.log(data))
+    //   .catch(console.log);
   }, []);
 
   const renderItem = ({item, index}) => {
@@ -26,7 +42,7 @@ function Home() {
   const renderEmpty = () => {
     return (
       <View>
-        <Text>Empty</Text>
+        <Text>Empty Demo</Text>
       </View>
     );
   };
@@ -43,7 +59,7 @@ function Home() {
           <RefreshControl
             refreshing={false}
             onRefresh={() => {
-              setData(INITIAL_DATA);
+              setData(myPost);
             }}
           />
         }
