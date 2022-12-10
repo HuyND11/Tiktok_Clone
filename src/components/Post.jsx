@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react';
 import Video from 'react-native-video';
 import VideoDescription from './VideoDescription';
 import ReactBar from './ReactBar';
+import {POST_HEIGHT} from '../utils/Constants';
 
 function Post({post}) {
   const [paused, setPaused] = useState(false);
@@ -45,8 +46,8 @@ function Post({post}) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: Dimensions.get('window').height,
-    // paddingBottom: 45,
+    backgroundColor: 'pink',
+    height: POST_HEIGHT,
   },
 
   video: {

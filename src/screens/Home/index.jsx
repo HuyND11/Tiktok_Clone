@@ -1,5 +1,5 @@
 import {View, Text, RefreshControl, Dimensions} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Post from '../../components/Post';
 
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,13 +7,15 @@ import getPostData from './../../redux/posts/thunk';
 import {store} from './../../redux/store';
 import {FlatList} from 'react-native-gesture-handler';
 import axios from 'axios';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {POST_HEIGHT} from '../../utils/Constants';
 
 function Home() {
   const dispatch = useDispatch();
   const myPost = useSelector(state => state.getPostToolkitReducer.data);
 
   const loading = useSelector(state => state.getPostToolkitReducer.loading);
-
+  const [first, setfirst] = useState([]);
   // store.getState();
 
   console.log('myPost => ', myPost);
@@ -25,6 +27,7 @@ function Home() {
       .get('https://61bc10c1d8542f001782453b.mockapi.io/post')
       .then(res => {
         console.log('Data =>', res.data);
+        setfirst(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -50,11 +53,11 @@ function Home() {
   return (
     <View>
       <FlatList
-        snapToInterval={Dimensions.get('window').height - 200}
+        snapToInterval={POST_HEIGHT}
         pagingEnabled
         ListEmptyComponent={renderEmpty}
         renderItem={renderItem}
-        data={myPost}
+        data={first}
         refreshControl={
           <RefreshControl
             refreshing={false}
