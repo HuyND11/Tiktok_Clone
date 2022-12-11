@@ -55,15 +55,6 @@ function Home() {
         ListEmptyComponent={renderEmpty}
         renderItem={renderItem}
         data={myPost}
-        refreshControl={
-          <RefreshControl
-            refreshing={false}
-            onRefresh={() => {
-              setData(myPost);
-            }}
-          />
-        }
-        keyExtractor={item => item.id}
       />
     </View>
   );
