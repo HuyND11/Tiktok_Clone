@@ -8,19 +8,22 @@ import React, {useEffect, useState} from 'react';
 import Video from 'react-native-video';
 import VideoDescription from './VideoDescription';
 import ReactBar from './ReactBar';
+import {POST_HEIGHT} from '../utils/Constants';
 
 function Post({post}) {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
 
   const onPlayPauseVideo = () => {
     setPaused(!paused);
   };
 
+  useEffect;
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={onPlayPauseVideo}>
         <Video
-          source={{uri: post?.item?.videoURL}}
+          source={{uri: post?.videoURL}}
           onError={e => console.log(e)}
           style={styles.video}
           resizeMode="cover"
@@ -30,12 +33,17 @@ function Post({post}) {
         />
       </TouchableWithoutFeedback>
       <View style={styles.uiContainer}>
-        <ReactBar isLove={post.item.isLove} avatar={post.item.author.avatar} />
+        <ReactBar
+          isLove={post?.isLove}
+          love={post?.like}
+          share={post?.share}
+          avatar={post?.author.avatar}
+        />
         <VideoDescription
-          desc={post.item.description}
-          name={post.item.author.name}
-          songName={post.item.songName}
-          songImage={post.item.songImage}
+          desc={post?.description}
+          name={post?.author.name}
+          songName={post?.songName}
+          songImage={post?.songImage}
         />
       </View>
     </View>
@@ -45,8 +53,8 @@ function Post({post}) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: Dimensions.get('window').height,
-    // paddingBottom: 45,
+    backgroundColor: 'pink',
+    height: POST_HEIGHT,
   },
 
   video: {

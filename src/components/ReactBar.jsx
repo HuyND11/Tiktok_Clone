@@ -5,15 +5,32 @@ import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import Fontisto from 'react-native-vector-icons/dist/Fontisto';
 
-function ReactBar({isLove, avatar}) {
-  const [isLoving, setIsLoving] = useState(isLove);
+function ReactBar({isLove, avatar, love, share}) {
+  const [loveStatus, setLoveStatus] = useState({
+    isLove: isLove,
+    quantityLove: love,
+  });
+
+  const Loving = () => {
+    if (loveStatus?.isLove) {
+      loveStatus?.quantityLove - 1;
+      setLoveStatus({...loveStatus, isLove: false});
+    } else {
+      loveStatus?.quantityLove + 1;
+      setLoveStatus({...loveStatus, isLove: true});
+    }
+  };
   return (
     <View style={styles.container}>
       <Avatar image={avatar} />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={Loving}>
         <View style={styles.reactIcon}>
-          <AntDesign name="heart" size={30} color={isLove ? 'red' : 'white'} />
-          <Text style={styles.quantity}>50</Text>
+          <AntDesign
+            name="heart"
+            size={30}
+            color={loveStatus?.isLove ? 'red' : 'white'}
+          />
+          <Text style={styles.quantity}>{loveStatus?.quantityLove}</Text>
         </View>
       </TouchableOpacity>
 
@@ -28,7 +45,7 @@ function ReactBar({isLove, avatar}) {
       </View>
       <View style={styles.reactIcon}>
         <FontAwesome name="share" size={30} color="#FFF" />
-        <Text style={styles.quantity}>50</Text>
+        <Text style={styles.quantity}>{share}</Text>
       </View>
     </View>
   );

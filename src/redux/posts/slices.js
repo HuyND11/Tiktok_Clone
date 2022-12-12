@@ -18,8 +18,7 @@ export const getPostSlice = createSlice({
     builder.addCase(getPostData.fulfilled, (state, action) => {
       console.log('action', action);
       state.loading = false;
-      console.log('payload =>', action?.payload);
-      state.data.push(...action?.payload);
+      state.data.push(...action?.payload?.data);
     });
     builder.addCase(getPostData.rejected, (state, action) => {
       console.log('action', action);

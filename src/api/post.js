@@ -1,10 +1,13 @@
 import axoisRequest from './index';
-
+const url = 'post';
 const PostAPI = {
   getPost: async () => {
-    let url = 'posts';
-    console.log('get post api');
     return axoisRequest.get(url);
+  },
+
+  postNewPost: async post => {
+    console.log(post);
+    return axoisRequest.post(url, post);
   },
 };
 

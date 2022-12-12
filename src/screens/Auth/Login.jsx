@@ -12,17 +12,18 @@ import React, {useEffect, useState} from 'react';
 import {useCallback} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import PostAPI from '../../api/post';
+import UserAPI from '../../api/user';
 
 function Login({navigation}) {
   const [accounts, setAccounts] = useState([]);
   const [user, setUser] = useState({});
 
+  const getData = async () => {
+    UserAPI.getUser().then(res => {
+      setAccounts(res.data);
+    });
+  };
   useEffect(() => {
-    async function getData() {
-      const users = await firestore().collection('users').get();
-      const userList = users.docs.map(doc => ({...doc.data(), id: doc.id}));
-      setAccounts(userList);
-    }
     getData();
   }, []);
 
@@ -43,28 +44,6 @@ function Login({navigation}) {
       console.log('sai account');
     }
   };
-
-  // function checkPhone(phone) {
-  //   let condition = false;
-  //   accounts?.map(account => {
-  //     if (account.phone === phone) {
-  //       condition = true;
-  //       return true;
-  //     }
-  //   });
-  //   return condition;
-  // }
-
-  // function checkPassword(password) {
-  //   let condition = false;
-  //   accounts?.map(account => {
-  //     if (account.password === password) {
-  //       condition = true;
-  //       return true;
-  //     }
-  //   });
-  //   return condition;
-  // }
 
   const userExist = (phone, password) => {
     return accounts.some(account => {

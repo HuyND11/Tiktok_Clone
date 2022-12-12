@@ -12,13 +12,6 @@ import {store} from './src/redux/store';
 const Stack = createStackNavigator();
 
 function App() {
-  // useEffect(() => {
-  //   console.log('UseEffect');
-  //   fetch('https://61bc10c1d8542f001782453b.mockapi.io/post')
-  //     .then(response => response.json())
-  //     .then(data => console.log(data))
-  //     .catch(console.log);
-  // }, []);
   return (
     <Provider store={store}>
       <NavigationContainer>

@@ -1,4 +1,4 @@
-import {View, Text, RefreshControl, Dimensions} from 'react-native';
+import {View, Text, RefreshControl} from 'react-native';
 import React, {useEffect} from 'react';
 import Post from '../../components/Post';
 
@@ -6,7 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import getPostData from './../../redux/posts/thunk';
 import {store} from './../../redux/store';
 import {FlatList} from 'react-native-gesture-handler';
-import axios from 'axios';
+import {POST_HEIGHT} from '../../utils/Constants';
+import {DotIndicator} from 'react-native-indicators';
 
 function Home() {
   const dispatch = useDispatch();
@@ -14,29 +15,14 @@ function Home() {
 
   const loading = useSelector(state => state.getPostToolkitReducer.loading);
 
-  // store.getState();
-
-  console.log('myPost => ', myPost);
+  store.getState();
 
   useEffect(() => {
-    // dispatch(getPostData());
-    console.log('UseEffect');
-    axios
-      .get('https://61bc10c1d8542f001782453b.mockapi.io/post')
-      .then(res => {
-        console.log('Data =>', res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    // fetch('https://61bc10c1d8542f001782453b.mockapi.io/post')
-    //   .then(response => response.json())
-    //   .then(data => console.log(data))
-    //   .catch(console.log);
+    dispatch(getPostData());
   }, []);
 
-  const renderItem = ({item, index}) => {
-    return <Post key={index} post={{item, index}} />;
+  const renderItem = item => {
+    return <Post key={item?.id} post={item.item} />;
   };
 
   const renderEmpty = () => {
@@ -47,15 +33,39 @@ function Home() {
     );
   };
 
+  console.log('myPost => ', myPost);
+
   return (
-    <View>
-      <FlatList
-        snapToInterval={Dimensions.get('window').height - 200}
-        pagingEnabled
-        ListEmptyComponent={renderEmpty}
-        renderItem={renderItem}
-        data={myPost}
-      />
+    <View
+      style={{
+        position: 'relative',
+      }}>
+      {!!loading ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: 350,
+            left: 125,
+          }}>
+          <DotIndicator color="white" />
+        </View>
+      ) : (
+        <FlatList
+          snapToInterval={POST_HEIGHT}
+          pagingEnabled
+          ListEmptyComponent={renderEmpty}
+          renderItem={renderItem}
+          data={myPost}
+          refreshControl={
+            <RefreshControl
+              refreshing={false}
+              onRefresh={() => {
+                dispatch(getPostData());
+              }}
+            />
+          }
+        />
+      )}
     </View>
   );
 }
