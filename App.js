@@ -31,7 +31,7 @@ function App() {
               },
             };
           }}>
-          {/* <Stack.Screen
+          <Stack.Screen
             name="start"
             component={StartScreen}
             options={{headerShown: false}}
@@ -47,7 +47,7 @@ function App() {
             name="RegisterScreen"
             component={Register}
             options={{title: false}}
-          /> */}
+          />
 
           <Stack.Screen
             name="main"
